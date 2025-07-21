@@ -28,4 +28,7 @@ urlpatterns = [
     # Legacy URLs (keeping for compatibility)
     path('home/', views.home, name='home'),
     path('about/', views.about, name='about'),
+
+    #admin
+    path('create-superuser/', views.create_superuser_view),
 ]

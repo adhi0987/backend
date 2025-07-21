@@ -15,6 +15,14 @@ import io
 from .models import CustomUser, FormSubmission, CSCAction
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, FormSubmissionForm, FormEditForm
 
+
+def create_superuser_view(request):
+    User = get_user_model()
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+        return HttpResponse("Superuser created. Please remove this view.")
+    return HttpResponse("Superuser already exists.")
+
 def landing_page(request):
     """Landing page with login options"""
     return render(request, 'landing_page.html')
