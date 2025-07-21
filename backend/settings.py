@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["connect-indu.onrender.com","*"]
 
+# CSRF trusted origins for production
+CSRF_TRUSTED_ORIGINS = [
+    "https://connect-indu.onrender.com",
+]
 
 # Application definition
 
