@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}My Forms - Form Management System{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="container">
+        <div class="dashboard-header">
+            <h1><i class="fas fa-list"></i> My Form Submissions</h1>
+            <p style="color: #666; margin: 0;">Track all your submitted forms and their current status</p>
+        </div>
+
+        {% if forms %}
+            <div class="table-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="margin: 0; color: #333;">All Forms ({{ forms.paginator.count }})</h2>
+                    <a href="{% url 'create_form' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create New Form
+                    </a>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Form ID</th>
+                            <th>Submission Date</th>
+                            <th>Status</th>
+                            <th>Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in forms %}
+                        <tr>
+                            <td><strong>#{{ form.form_id }}</strong></td>
+                            <td>{{ form.submission_date|date:"M d, Y H:i" }}</td>
+                            <td>
+                                <span class="status-badge status-{{ form.status }}">
+                                    {{ form.get_status_display }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if form.comments %}
+                                    {{ form.comments|truncatewords:10 }}
+                                {% else %}
+                                    <span style="color: #aaa; font-style: italic;">No comments</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                    <a href="{% url 'view_form' form.form_id %}" class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                    {% if form.status == 'completed' %}
+                                        <a href="{% url 'download_form_pdf' form.form_id %}" class="btn btn-success" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                                            <i class="fas fa-download"></i> Download PDF
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                {% if forms.has_other_pages %}
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 2rem;">
+                        {% if forms.has_previous %}
+                            <a href="?page=1" class="btn btn-secondary" style="padding: 0.5rem 1rem;">
+                                <i class="fas fa-angle-double-left"></i> First
+                            </a>
+                            <a href="?page={{ forms.previous_page_number }}" class="btn btn-secondary" style="padding: 0.5rem 1rem;">
+                                <i class="fas fa-angle-left"></i> Previous
+                            </a>
+                        {% endif %}
+
+                        <span style="color: #666; font-weight: 600;">
+                            Page {{ forms.number }} of {{ forms.paginator.num_pages }}
+                        </span>
+
+                        {% if forms.has_next %}
+                            <a href="?page={{ forms.next_page_number }}" class="btn btn-secondary" style="padding: 0.5rem 1rem;">
+                                Next <i class="fas fa-angle-right"></i>
+                            </a>
+                            <a href="?page={{ forms.paginator.num_pages }}" class="btn btn-secondary" style="padding: 0.5rem 1rem;">
+                                Last <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 4rem; color: #666;">
+                <i class="fas fa-clipboard" style="font-size: 6rem; margin-bottom: 2rem; opacity: 0.5;"></i>
+                <h2 style="margin-bottom: 1rem;">No Forms Submitted Yet</h2>
+                <p style="margin-bottom: 2rem; font-size: 1.1rem;">You haven't submitted any forms yet. Start by creating your first form submission.</p>
+                <a href="{% url 'create_form' %}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i class="fas fa-plus"></i> Create Your First Form
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

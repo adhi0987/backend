@@ -1,11 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Form Management System{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Form Management System</h1>
+        <p>Streamline your form processing with our comprehensive management solution</p>
+    </div>
+</section>
+
+<!-- Login Options Section -->
+<section class="login-options">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 3rem; color: #333; font-size: 2.5rem;">Choose Your Login Type</h2>
+        
+        <div class="login-grid">
+            <!-- User Login -->
+            <div class="login-card">
+                <i class="fas fa-user"></i>
+                <h3>User Portal</h3>
+                <p>Submit and track your forms, view application status, and download completed documents.</p>
+                <a href="{% url 'user_login' %}" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> User Login
+                </a>
+            </div>
+
+            <!-- CSC Login -->
+            <div class="login-card">
+                <i class="fas fa-users-cog"></i>
+                <h3>CSC Portal</h3>
+                <p>Review submitted forms, edit applications, and manage form processing workflow.</p>
+                <a href="{% url 'csc_login' %}" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> CSC Login
+                </a>
+            </div>
+
+            <!-- Lab Technician Login -->
+            <div class="login-card">
+                <i class="fas fa-microscope"></i>
+                <h3>Lab Technician</h3>
+                <p>Access technical dashboard for laboratory operations and specialized form processing.</p>
+                <a href="{% url 'technician_login' %}" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Technician Login
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Company Information Section -->
+<section style="padding: 4rem 0; background: #f8f9fa;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; align-items: center;">
+            <div>
+                <h2 style="color: #333; margin-bottom: 1.5rem; font-size: 2rem;">About Our Platform</h2>
+                <p style="color: #666; font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                    Our Form Management System provides a comprehensive solution for handling all your form processing needs. 
+                    From submission to completion, we ensure a smooth and efficient workflow.
+                </p>
+                <ul style="color: #666; list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;"><i class="fas fa-check-circle" style="color: #28a745; margin-right: 0.5rem;"></i> Secure form submission and storage</li>
+                    <li style="margin-bottom: 0.5rem;"><i class="fas fa-check-circle" style="color: #28a745; margin-right: 0.5rem;"></i> Real-time status tracking</li>
+                    <li style="margin-bottom: 0.5rem;"><i class="fas fa-check-circle" style="color: #28a745; margin-right: 0.5rem;"></i> Automated workflow management</li>
+                    <li style="margin-bottom: 0.5rem;"><i class="fas fa-check-circle" style="color: #28a745; margin-right: 0.5rem;"></i> Document generation and download</li>
+                </ul>
+            </div>
+            <div style="text-align: center;">
+                <i class="fas fa-clipboard-check" style="font-size: 8rem; color: #667eea; opacity: 0.8;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section style="padding: 4rem 0;">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 3rem; color: #333; font-size: 2.5rem;">Why Choose Our System?</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div style="text-align: center; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <i class="fas fa-rocket" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 1rem; color: #333;">Fast Processing</h4>
+                <p style="color: #666;">Quick form processing with automated workflows and efficient review systems.</p>
+            </div>
+            
+            <div style="text-align: center; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <i class="fas fa-shield-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 1rem; color: #333;">Secure & Reliable</h4>
+                <p style="color: #666;">Bank-level security with encrypted data storage and secure access controls.</p>
+            </div>
+            
+            <div style="text-align: center; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <i class="fas fa-mobile-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 1rem; color: #333;">Mobile Friendly</h4>
+                <p style="color: #666;">Responsive design that works perfectly on all devices and screen sizes.</p>
+            </div>
+            
+            <div style="text-align: center; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <i class="fas fa-headset" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                <h4 style="margin-bottom: 1rem; color: #333;">24/7 Support</h4>
+                <p style="color: #666;">Round-the-clock customer support to help you with any questions or issues.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
