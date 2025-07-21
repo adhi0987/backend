@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Form Management System{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'landing_page' %}" class="navbar-brand">
+                <i class="fas fa-clipboard-list"></i> FormSystem
+            </a>
+            
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    {% if user.user_type == 'user' %}
+                        <li><a href="{% url 'user_dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    {% elif user.user_type == 'csc' %}
+                        <li><a href="{% url 'csc_dashboard' %}"><i class="fas fa-tasks"></i> CSC Dashboard</a></li>
+                    {% elif user.user_type == 'technician' %}
+                        <li><a href="{% url 'technician_dashboard' %}"><i class="fas fa-cogs"></i> Technician</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'landing_page' %}"><i class="fas fa-home"></i> Home</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back button for authenticated pages -->
+    {% if show_back_button and user.is_authenticated %}
+        <div class="container" style="margin-top: 1rem;">
+            {% if user.user_type == 'user' %}
+                <a href="{% url 'user_dashboard' %}" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            {% elif user.user_type == 'csc' %}
+                <a href="{% url 'csc_dashboard' %}" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to CSC Dashboard
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- Main content -->
+    <main>
+        <!-- Messages -->
+        {% if messages %}
+            <div class="container" style="margin-top: 1rem;">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer (only show on landing page) -->
+    {% if not user.is_authenticated %}
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Our Company</h3>
+                    <p>We provide comprehensive form management solutions for organizations, enabling efficient processing and tracking of applications and requests.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <p><a href="#">Form Processing</a></p>
+                    <p><a href="#">Document Management</a></p>
+                    <p><a href="#">Status Tracking</a></p>
+                    <p><a href="#">Support Services</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-envelope"></i> info@formsystem.com</p>
+                    <p><i class="fas fa-phone"></i> +1-234-567-8900</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Business Street, City, State 12345</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+                    <p><a href="#"><i class="fab fa-twitter"></i> Twitter</a></p>
+                    <p><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+                    <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Form Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    {% endif %}
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

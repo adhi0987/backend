@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}User Dashboard - Form Management System{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h1 style="margin-bottom: 0.5rem;">Welcome, {{ user.username }}!</h1>
+                    <p style="color: #666; margin: 0;">Manage your form submissions and track their progress</p>
+                </div>
+                <div>
+                    <a href="{% url 'create_form' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create New Form
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-number">{{ total_forms }}</div>
+                <div class="stat-label">Total Forms</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ completed_forms }}</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ pending_forms }}</div>
+                <div class="stat-label">Pending</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+            <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <h3 style="margin-bottom: 1rem; color: #333;">
+                    <i class="fas fa-plus-circle" style="color: #667eea;"></i> Submit New Form
+                </h3>
+                <p style="color: #666; margin-bottom: 1.5rem;">Start a new application by filling out the required information.</p>
+                <a href="{% url 'create_form' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Create Form
+                </a>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
+                <h3 style="margin-bottom: 1rem; color: #333;">
+                    <i class="fas fa-list" style="color: #667eea;"></i> View All Forms
+                </h3>
+                <p style="color: #666; margin-bottom: 1.5rem;">See all your submitted forms and track their current status.</p>
+                <a href="{% url 'user_forms_list' %}" class="btn btn-secondary">
+                    <i class="fas fa-eye"></i> View Forms
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Forms -->
+        <div class="table-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 style="margin: 0; color: #333;">Recent Forms</h2>
+                <a href="{% url 'user_forms_list' %}" style="color: #667eea; text-decoration: none; font-weight: 600;">
+                    View All <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            {% if user_forms %}
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Form ID</th>
+                                <th>Submission Date</th>
+                                <th>Status</th>
+                                <th>Comments</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for form in user_forms %}
+                            <tr>
+                                <td><strong>#{{ form.form_id }}</strong></td>
+                                <td>{{ form.submission_date|date:"M d, Y H:i" }}</td>
+                                <td>
+                                    <span class="status-badge status-{{ form.status }}">
+                                        {{ form.get_status_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if form.comments %}
+                                        {{ form.comments|truncatewords:10 }}
+                                    {% else %}
+                                        <span style="color: #aaa; font-style: italic;">No comments</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'view_form' form.form_id %}" class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                    {% if form.status == 'completed' %}
+                                        <a href="{% url 'download_form_pdf' form.form_id %}" class="btn btn-success" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">
+                                            <i class="fas fa-download"></i> PDF
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div style="text-align: center; padding: 3rem; color: #666;">
+                    <i class="fas fa-clipboard" style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                    <h3 style="margin-bottom: 0.5rem;">No Forms Submitted Yet</h3>
+                    <p style="margin-bottom: 2rem;">Start by creating your first form submission.</p>
+                    <a href="{% url 'create_form' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create Your First Form
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Form #{{ form_submission.form_id }} - CSC Dashboard{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 2rem; margin-bottom: 2rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <i class="fas fa-edit" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                <h1 style="margin-bottom: 0.5rem;">Edit Form #{{ form_submission.form_id }}</h1>
+                <p style="color: #666;">Update form information and status</p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                <!-- Personal Information Section -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: #333; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #667eea;">
+                        <i class="fas fa-user"></i> Personal Information
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                        <div class="form-group">
+                            <label for="{{ form.full_name.id_for_label }}">
+                                <i class="fas fa-user"></i> Full Name *
+                            </label>
+                            {{ form.full_name }}
+                            {% if form.full_name.errors %}
+                                <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                    {{ form.full_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.date_of_birth.id_for_label }}">
+                                <i class="fas fa-calendar"></i> Date of Birth *
+                            </label>
+                            {{ form.date_of_birth }}
+                            {% if form.date_of_birth.errors %}
+                                <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                    {{ form.date_of_birth.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">
+                                <i class="fas fa-envelope"></i> Email Address *
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                    {{ form.email.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.phone_number.id_for_label }}">
+                                <i class="fas fa-phone"></i> Phone Number *
+                            </label>
+                            {{ form.phone_number }}
+                            {% if form.phone_number.errors %}
+                                <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                    {{ form.phone_number.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.occupation.id_for_label }}">
+                            <i class="fas fa-briefcase"></i> Occupation *
+                        </label>
+                        {{ form.occupation }}
+                        {% if form.occupation.errors %}
+                            <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                {{ form.occupation.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.address.id_for_label }}">
+                            <i class="fas fa-map-marker-alt"></i> Complete Address *
+                        </label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                            <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                {{ form.address.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Application Details Section -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: #333; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #667eea;">
+                        <i class="fas fa-clipboard-list"></i> Application Details
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.purpose.id_for_label }}">
+                            <i class="fas fa-bullseye"></i> Purpose of Application *
+                        </label>
+                        {{ form.purpose }}
+                        {% if form.purpose.errors %}
+                            <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                {{ form.purpose.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.additional_notes.id_for_label }}">
+                            <i class="fas fa-sticky-note"></i> Additional Notes
+                        </label>
+                        {{ form.additional_notes }}
+                        {% if form.additional_notes.errors %}
+                            <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                {{ form.additional_notes.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        {{ form.previous_applications }}
+                        <label for="{{ form.previous_applications.id_for_label }}" style="margin-left: 0.5rem; margin-bottom: 0;">
+                            Previous applications submitted
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact Section -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: #333; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #667eea;">
+                        <i class="fas fa-phone-alt"></i> Emergency Contact
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                        <div class="form-group">
+                            <label for="{{ form.emergency_contact_name.id_for_label }}">
+                                <i class="fas fa-user-friends"></i> Emergency Contact Name
+                            </label>
+                            {{ form.emergency_contact_name }}
+                            {% if form.emergency_contact_name.errors %}
+                                <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                    {{ form.emergency_contact_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.emergency_contact_phone.id_for_label }}">
+                                <i class="fas fa-phone-alt"></i> Emergency Contact Phone
+                            </label>
+                            {{ form.emergency_contact_phone }}
+                            {% if form.emergency_contact_phone.errors %}
+                                <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                    {{ form.emergency_contact_phone.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status and Comments Section -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: #333; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #667eea;">
+                        <i class="fas fa-cogs"></i> Status Management
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.status.id_for_label }}">
+                            <i class="fas fa-flag"></i> Status *
+                        </label>
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                            <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                {{ form.status.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.comments.id_for_label }}">
+                            <i class="fas fa-comments"></i> Comments & Notes
+                        </label>
+                        {{ form.comments }}
+                        {% if form.comments.errors %}
+                            <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                                {{ form.comments.errors.0 }}
+                            </div>
+                        {% endif %}
+                        <div style="color: #666; font-size: 0.875rem; margin-top: 0.25rem;">
+                            Add any comments or notes about this form for the applicant
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Information -->
+                <div style="margin-bottom: 2rem; padding: 1rem; background-color: #f8f9fa; border-radius: 8px;">
+                    <h4 style="color: #333; margin-bottom: 0.5rem;">
+                        <i class="fas fa-info-circle"></i> Form Information
+                    </h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.9rem; color: #666;">
+                        <div>
+                            <strong>Submitted by:</strong><br>
+                            {{ form_submission.user.username }}
+                        </div>
+                        <div>
+                            <strong>Submission Date:</strong><br>
+                            {{ form_submission.submission_date|date:"F d, Y H:i" }}
+                        </div>
+                        <div>
+                            <strong>Last Updated:</strong><br>
+                            {{ form_submission.last_updated|date:"F d, Y H:i" }}
+                        </div>
+                        <div>
+                            <strong>Current Status:</strong><br>
+                            <span class="status-badge status-{{ form_submission.status }}">
+                                {{ form_submission.get_status_display }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid #e9ecef;">
+                    <button type="submit" class="btn btn-primary" style="min-width: 150px;">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <a href="{% url 'csc_dashboard' %}" class="btn btn-secondary" style="min-width: 150px;">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
